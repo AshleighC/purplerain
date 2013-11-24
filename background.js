@@ -1,4 +1,6 @@
-var weather_types = 
+var current_weather = new Object(); // object for list of currently displaying weather styles
+var geo_location = new Object(); // object for location by latitude and longitude
+var weather_types =  // object mapping weather codes to weather styles
 {
     200: ["clouds", "rain", "thunder"],
      201: ["clouds", "rain", "thunder"],
@@ -43,18 +45,23 @@ var weather_types =
      802: ["clouds"],
      803: ["clouds"],
      804: ["clouds"],
-}
+};
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    // TODO: Do stuff with the city name.
-    //alert(message.cityName);
-    //sendMessage({weather: "sun"});
-    if(message.cityName !== "") {
+//Listener for new message on "options" box
+  if(message.cityName === "tornado") {
+    //special behavior for tornado
+    current_weather["weather"] = ["tornado"];
+    sendMessage(current_weather);
+  } else if(message.cityName !== "") {
+    //weather based off city
     getCityWeather(message.cityName);
-    } else {
+  } else {
+    //weather based off location 
     getLocation();
-    }
-    });
+  }
+});
+
 
 function sendMessage(message) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -62,27 +69,27 @@ function sendMessage(message) {
       });
 }
 
-var current_weather = new Object();
-var geo_location = new Object();
-//geo_location["lat"] = 35;
-//geo_location["lon"] = 139;
-
 function getCityWeather(city) {
+//Gets the weather for a city using the Open Weather Map API
+//Sends a message with weather styles if successful
   var url = "http://api.openweathermap.org/data/2.5/weather?" + "q=" + city + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
   console.log(url);
-  var weather;
+  var weather_ID;
   $.get(url, function(data) {
       console.log(data);
       console.log("Weather is:" + data["weather"][0]["main"]);
-      weather = data["weather"][0]["main"];
+      console.log("Weather id " + data.weather[0].id);
+      weather_ID = data.weather[0].id;
+      current_weather["weather"] = weather_types[weather_ID];
       },
       "json");
-  current_weather["weather"] = weather_types[weather_ID];
   console.log(current_weather);
   sendMessage(current_weather);
 }
 
 function getWeather(lat, lon) {
+//Gets the weather for a latitude and longitude location
+//Sends a message with weather styles if successful
   console.log("hello");
   var url = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
   console.log(url);
@@ -99,6 +106,7 @@ function getWeather(lat, lon) {
 
 
 function getLocation() {
+//Gets the current location of user
   navigator.geolocation.getCurrentPosition(function(position) {
       getWeather(position.coords.latitude, position.coords.longitude);
       });
