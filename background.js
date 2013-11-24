@@ -80,7 +80,7 @@ chrome.storage.local.get("city", function(result) {
 });
 
 /**
- * Adds a listener for messages coming from the options page.
+ * Adds a listener for messages coming from the popup.
  */
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   $.getJSON("special.json", function(special) {

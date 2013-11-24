@@ -60,8 +60,6 @@
       "38": "img/icon38.png"
     },
     "default_title": "Purple Rain",
-    "default_popup": "options.html"
-  },
-
-  "options_page": "options.html"
+    "default_popup": "popup.html"
+  }
 }
