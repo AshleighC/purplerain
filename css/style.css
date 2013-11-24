@@ -1,1 +1,56 @@
 /* style.css */
+
+.sun {
+  position: fixed;
+  z-index: 1000;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/sun.png');
+  top: 0;
+  left: 30%;
+  height: 500px;
+  width: 500px;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.clouds {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/clouds.png');
+  height: 405px;
+  width: 939px;
+  -webkit-animation:move 4s linear infinite;
+  -moz-animation:move 4s linear infinite;
+  animation:move 4s linear infinite;
+}
+
+@-moz-keyframes move { 100% { -moz-transform: translate(400px, 0); } }
+@-webkit-keyframes move { 100% { -webkit-transform: translate(400px, 0); } }
+@keyframes move { 100% { -webkit-transform: translate(400px, 0); transform:translate(400px, 0); } }
+
+.snow {
+  position: fixed;
+  z-index: 1000;
+  top: -500px;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/snow.png');
+  -webkit-animation:updown 10s linear infinite;
+  -moz-animation:updown 10s linear infinite;
+  animation:updown 10s linear infinite;
+}
+
+@-moz-keyframes updown { 100% { -moz-transform: translate(0, 500px); } }
+@-webkit-keyframes updown { 100% { -webkit-transform: translate(0, 500px); } }
+@keyframes updown { 100% { -webkit-transform: translate(0, 500px); transform:translate(0, 500px); } }
+
+
+
+
