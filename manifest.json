@@ -45,6 +45,7 @@
   },
 
   "web_accessible_resources": [
+    "img/loading.gif",
     "img/sun.png",
     "img/clouds.png",
     "img/snow.png",

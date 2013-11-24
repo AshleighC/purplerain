@@ -10,8 +10,15 @@
   width: 200px;
   overflow: hidden;
 }
-label {
-  white-space: nowrap;
+
+#loadingImage {
+  height: 25px;
+  width: 25px;
+}
+
+#errorText {
+  display: none;
+  color: #F00;
 }
 
 h1,
