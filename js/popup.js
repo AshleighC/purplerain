@@ -6,4 +6,5 @@ $(document).ready(function() {
 
 $('#startButton').click(function() {
   chrome.runtime.sendMessage({"city": $('#cityName').val()});
+  window.close();
 });
