@@ -10,10 +10,27 @@ function sendMessage(message) {
 }
 
 var current_weather;
+var geo_location = new Object();
+//geo_location["lat"] = 35;
+//geo_location["lon"] = 139;
 
-function getWeather() {
+function getWeather(lat, lon) {
+  console.log("hello");
+  var url = "api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon;
+  console.log(url);
+  $.get(url, function(data) {
+    console.log("success");
+    console.log("Weather is:" + data["weather"]["main"]);
+    sendMessage(data["weather"]["main"]);
+    });
+}
+
+function getLocation() {
   navigator.geolocation.getCurrentPosition(function(position) {
-    alert("Latitude: " + position.coords.latitude +
-        "\nLongitude: " + position.coords.longitude);
+    getWeather(position.coords.latitude, position.coords.longitude);
+    /*alert("Latitude: " + position.coords.latitude +
+        "\nLongitude: " + position.coords.longitude);*/
   });
 }
+
+getLocation();
