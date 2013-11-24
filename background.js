@@ -55,11 +55,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     sendMessage(current_weather);
   } else if (message.city !== "") {
     //weather based off city
-    getCityWeather(message.city);
-    setCity(message.city);
+    setCity(message.city, getWeather);
   } else {
-    //weather based off location 
-    getLocation();
+    //weather based off saved city
+    getWeather();
   }
 });
 
@@ -69,8 +68,9 @@ function sendMessage(message) {
   });
 }
 
-function setCity(city) {
-  chrome.storage.local.set({"city": city});
+function setCity(city, callback) {
+  callback = callback || function() {};
+  chrome.storage.local.set({"city": city}, callback);
 }
 
 function setCityToCurrentPosition() {
@@ -103,45 +103,22 @@ function initializeCity() {
   });
 }
 
-function getCityWeather(city) {
-//Gets the weather for a city using the Open Weather Map API
-//Sends a message with weather styles if successful
-  var url = "http://api.openweathermap.org/data/2.5/weather?" + "q=" + city + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
-  console.log(url);
-  var weather_ID;
-  $.get(url, function(data) {
+function getWeather() {
+  //Gets the weather for a city using the Open Weather Map API
+  //Sends a message with weather styles if successful
+  chrome.storage.local.get("city", function(result) {
+    var url = "http://api.openweathermap.org/data/2.5/weather?" + "q="
+        + result.city + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
+    console.log(url);
+    $.get(url, function(data) {
+      var weather_ID;
       console.log(data);
       console.log("Weather is:" + data["weather"][0]["main"]);
       console.log("Weather id " + data.weather[0].id);
       weather_ID = data.weather[0].id;
       current_weather["weather"] = weather_types[weather_ID];
-      },
-      "json");
-  console.log(current_weather);
-  sendMessage(current_weather);
-}
-
-function getWeather(lat, lon) {
-//Gets the weather for a latitude and longitude location
-//Sends a message with weather styles if successful
-  console.log("hello");
-  var url = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
-  console.log(url);
-  var weather_ID;
-  $.get(url, function(data) {
-      console.log(data);
-      console.log("Weather is:" + data["weather"][0]["main"]);
-      weather_ID = data["weather"][0]["id"];
-      },
-      "json");
-  current_weather["weather"] = weather_types[weather_ID];
-  sendMessage(current_weather);
-}
-
-
-function getLocation() {
-//Gets the current location of user
-  navigator.geolocation.getCurrentPosition(function(position) {
-    getWeather(position.coords.latitude, position.coords.longitude);
+      console.log(current_weather);
+      sendMessage(current_weather);
+    }, "json");
   });
 }
