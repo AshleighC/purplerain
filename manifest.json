@@ -22,6 +22,9 @@
         "js/jquery.js",
         "js/purplerain.js"
       ],
+      "css": [
+        "css/style.css"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     }
@@ -39,6 +42,12 @@
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
+
+  "web_accessible_resources": [
+    "img/sun.png",
+    "img/clouds.png",
+    "img/snow.png"
+  ],
 
   "browser_action": {
     "default_icon": {
