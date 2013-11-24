@@ -4,7 +4,7 @@
   position: fixed;
   z-index: 1000;
   background-image: url('chrome-extension://__MSG_@@extension_id__/img/sun.png');
-  top: 0;
+  top: 10%;
   left: 30%;
   height: 500px;
   width: 500px;
@@ -23,8 +23,8 @@
   top: 0;
   left: 0;
   background-image: url('chrome-extension://__MSG_@@extension_id__/img/clouds.png');
-  height: 405px;
-  width: 939px;
+  height: 200px;
+  width: 1500px;
   -webkit-animation:move 4s linear infinite;
   -moz-animation:move 4s linear infinite;
   animation:move 4s linear infinite;
@@ -51,6 +51,58 @@
 @-webkit-keyframes updown { 100% { -webkit-transform: translate(0, 500px); } }
 @keyframes updown { 100% { -webkit-transform: translate(0, 500px); transform:translate(0, 500px); } }
 
+.heavy-rain {
+  position: fixed;
+  z-index: 1000;
+  top: -500px;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/heavy_rain.png');
+  -webkit-animation:updown 1s linear infinite;
+  -moz-animation:updown 1s linear infinite;
+  animation:updown 1s linear infinite;
+}
+
+.light-rain {
+  position: fixed;
+  z-index: 1000;
+  top: -500px;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/light_rain.png');
+  -webkit-animation:updown 3s linear infinite;
+  -moz-animation:updown 3s linear infinite;
+  animation:updown 3s linear infinite;
+}
 
 
+.rain {
+  position: fixed;
+  z-index: 1000;
+  top: -500px;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/rain.png');
+  -webkit-animation:updown 5s linear infinite;
+  -moz-animation:updown 5s linear infinite;
+  animation:updown 5s linear infinite;
+}
 
+.tornado {
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+
+.avalanche {
+  -webkit-animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+  -moz-animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+  animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+}
+
+@-moz-keyframes earthquakeupdown { 100% { -moz-transform: translate(0, 100px); } }
+@-webkit-keyframes earthquakeupdown { 100% { -webkit-transform: translate(0, 100px); } }
+@keyframes earthquakeupdown { 100% { -webkit-transform: translate(0, 100px); transform:translate(0, 100px); } }

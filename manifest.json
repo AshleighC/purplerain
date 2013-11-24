@@ -48,7 +48,10 @@
     "img/sun.png",
     "img/clouds.png",
     "img/snow.png",
-    "img/icon128.png"
+    "img/icon128.png",
+    "img/rain.png",
+    "img/heavy_rain.png",
+    "img/light_rain.png"
   ],
 
   "browser_action": {
