@@ -21,6 +21,13 @@
   color: #F00;
 }
 
+a {
+  font-size: 10px;
+  color: #7b65ac;
+  cursor: pointer;
+}
+
+a,
 h1,
 label,
 input {
