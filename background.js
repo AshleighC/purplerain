@@ -1,3 +1,7 @@
+var cityName;
+var current_weather;
+var geo_location = new Object();
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   // TODO: Do stuff with the city name.
   //alert(message.cityName);
@@ -9,11 +13,6 @@ function sendMessage(message) {
     chrome.tabs.sendMessage(tabs[0].id, message);
   });
 }
-
-var current_weather;
-var geo_location = new Object();
-//geo_location["lat"] = 35;
-//geo_location["lon"] = 139;
 
 function getWeather(lat, lon) {
   console.log("hello");
@@ -28,10 +27,22 @@ function getWeather(lat, lon) {
   sendMessage(data["weather"][0]["main"]);
 }
 
-
 function getLocation() {
   navigator.geolocation.getCurrentPosition(function(position) {
       getWeather(position.coords.latitude, position.coords.longitude);
       });
 }
+
+chrome.storage.local.get("cityName", function(result) {
+  if (result.cityName) {
+    cityName = result.cityName;
+    alert(cityName);
+  } else {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      // TODO: Do stuff with location.
+      //alert(position.coords.latitude + ", " + position.coords.longitude);
+    });
+  }
+});
+
 getLocation();
