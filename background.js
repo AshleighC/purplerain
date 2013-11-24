@@ -7,9 +7,11 @@ function sendMessage(message) {
 
 var current_weather;
 
-function getWeather() {
+function getLocation() {
   navigator.geolocation.getCurrentPosition(function(position) {
     alert("Latitude: " + position.coords.latitude +
         "\nLongitude: " + position.coords.longitude);
   });
 }
+
+getWeather();
