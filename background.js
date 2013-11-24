@@ -20,9 +20,11 @@ function getWeather(lat, lon) {
   console.log(url);
   $.get(url, function(data) {
       console.log("success");
-      console.log("Weather is:" + data["weather"]["main"]);
+      console.log(data);
+      console.log("Weather is:" + data["weather"][0]["main"]);
       sendMessage(data["weather"]["main"]);
-      });
+      },
+      "json");
 }
 
 function getLocation() {
@@ -30,5 +32,4 @@ function getLocation() {
       getWeather(position.coords.latitude, position.coords.longitude);
       });
 }
-console.log("asdFASDF");
 getLocation();
