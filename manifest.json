@@ -21,7 +21,7 @@
       ],
       "js": [
         "js/jquery.js",
-        "js/purplerain.js"
+        "js/content.js"
       ],
       "css": [
         "css/style.css"
