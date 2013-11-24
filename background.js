@@ -55,6 +55,7 @@ function getWeather() {
     request.success(function(data) {
       popup.close();
       $.getJSON("weather.json", function(weatherTypes) {
+        console.log(data.weather[0].id);
         sendMessage({"weather": weatherTypes[data.weather[0].id]});
       });
     });

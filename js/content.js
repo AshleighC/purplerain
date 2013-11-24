@@ -8,7 +8,16 @@ handler.addDefaultHandler = function(weather) {
 
 handler.addDefaultHandler("sun");
 handler.addDefaultHandler("rain");
-handler.addDefaultHandler("tornado");
+handler.addDefaultHandler("snow");
+//handler.addDefaultHandler("tornado");
+
+handler["tornado"] = function() {
+  $("*").addClass("tornado");
+}
+
+handler["avalanche"] = function() {
+  $("*").addClass("avalanche");
+}
 
 handler["clouds"] = function() {
   $.each([500, 1200, 1700, 2500, 3000], function(i, delay) {
@@ -26,5 +35,6 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   }
   $.each(message.weather, function(i, weather) {
     handler[weather]();
+    console.log([weather]);
   });
 });
