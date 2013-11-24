@@ -8,8 +8,23 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     } else if (weather === "rain") {
       $('body').append('<div class="rain"></div>');
     } else if (weather === "clouds") {
-      $('body').append('<div class="clouds"></div>');
+      setTimeout(function() {
+        $('body').append('<div class="clouds"></div>');
+      }, 500);
+      setTimeout(function() {
+        $('body').append('<div class="clouds"></div>');
+      }, 1200);
+      setTimeout(function() {
+        $('body').append('<div class="clouds"></div>');
+      }, 1700);
+      setTimeout(function() {
+        $('body').append('<div class="clouds"></div>');
+      }, 2500);
+      setTimeout(function() {
+        $('body').append('<div class="clouds"></div>');
+      }, 3000);
     } else if (weather === "tornado") {
+      console.log("im a tornado");
       $('body').append('<div class="tornado"></div>');
     }
   }
