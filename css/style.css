@@ -91,4 +91,18 @@
   animation:updown 5s linear infinite;
 }
 
+.tornado {
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
 
+.avalanche {
+  -webkit-animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+  -moz-animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+  animation:earthquakeupdown 2s linear infinite, move 2s linear infinite;
+}
+
+@-moz-keyframes earthquakeupdown { 100% { -moz-transform: translate(0, 100px); } }
+@-webkit-keyframes earthquakeupdown { 100% { -webkit-transform: translate(0, 100px); } }
+@keyframes earthquakeupdown { 100% { -webkit-transform: translate(0, 100px); transform:translate(0, 100px); } }
