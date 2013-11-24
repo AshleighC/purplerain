@@ -77,7 +77,7 @@ function getCityWeather(city) {
       weather = data["weather"][0]["main"];
       },
       "json");
-  current_weather["weather"] = "n";
+  current_weather["weather"] = weather_types[weather_ID];
   console.log(current_weather);
   sendMessage(current_weather);
 }
@@ -86,14 +86,14 @@ function getWeather(lat, lon) {
   console.log("hello");
   var url = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
   console.log(url);
-  var weather;
+  var weather_ID;
   $.get(url, function(data) {
       console.log(data);
       console.log("Weather is:" + data["weather"][0]["main"]);
-      weather = data["weather"][0]["main"];
+      weather_ID = data["weather"][0]["id"];
       },
       "json");
-  current_weather["weather"] = weather;
+  current_weather["weather"] = weather_types[weather_ID];
   sendMessage(current_weather);
 }
 
