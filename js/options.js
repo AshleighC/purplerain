@@ -1,10 +1,11 @@
 $(document).ready(function() {
-  // TODO: Get saved preferences from storage.
-  $('#cityName').val("Berkeley");
+  chrome.storage.local.get("cityName", function(result) {
+    $('#cityName').val(result.cityName ? result.cityName : "Berkeley");
+  });
 });
 
 $('#startButton').click(function() {
-  // TODO: Save preferences in storage.
-  var cityName = $('#cityName').val();
-  chrome.runtime.sendMessage({city: cityName});
+  var cityNameObj = {"cityName": $('#cityName').val()}
+  chrome.storage.local.set(cityNameObj);
+  chrome.runtime.sendMessage(cityNameObj);
 });

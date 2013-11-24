@@ -8,6 +8,7 @@
   "permissions": [
     "tabs",
     "geolocation",
+    "storage",
     "http://api.openweathermap.org/data/2.5/*",
     "https://api.openweathermap.org/data/2.5/*"
   ],
