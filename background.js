@@ -48,25 +48,59 @@ var weather_types =  // object mapping weather codes to weather styles
 };
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-//Listener for new message on "options" box
-  if(message.cityName === "tornado") {
+  //Listener for new message on "options" box
+  if (message.city === "tornado") {
     //special behavior for tornado
     current_weather["weather"] = ["tornado"];
     sendMessage(current_weather);
-  } else if(message.cityName !== "") {
+  } else if (message.city !== "") {
     //weather based off city
-    getCityWeather(message.cityName);
+    getCityWeather(message.city);
+    setCity(message.city);
   } else {
     //weather based off location 
     getLocation();
   }
 });
 
-
 function sendMessage(message) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, message);
-      });
+    chrome.tabs.sendMessage(tabs[0].id, message);
+  });
+}
+
+function setCity(city) {
+  chrome.storage.local.set({"city": city});
+}
+
+function setCityToCurrentPosition() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
+        + position.coords.latitude + "," + position.coords.longitude
+        + "&sensor=false";
+    $.get(url, function(data) {
+      setCity(getLocality(data["results"][0]["address_components"]));
+    });
+  });
+}
+
+function getLocality(components) {
+  for (i in components) {
+    if (components[i]["types"].indexOf("locality") !== -1
+        || components[i]["types"].indexOf("sublocality") !== -1) {
+      return components[i]["long_name"];
+    }
+  }
+}
+
+function initializeCity() {
+  chrome.storage.local.get("city", function(result) {
+    if (result.city) {
+      setCity(result.city);
+    } else {
+      setCityToCurrentPosition();
+    }
+  });
 }
 
 function getCityWeather(city) {
@@ -108,6 +142,6 @@ function getWeather(lat, lon) {
 function getLocation() {
 //Gets the current location of user
   navigator.geolocation.getCurrentPosition(function(position) {
-      getWeather(position.coords.latitude, position.coords.longitude);
-      });
+    getWeather(position.coords.latitude, position.coords.longitude);
+  });
 }
