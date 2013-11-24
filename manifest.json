@@ -27,6 +27,7 @@
   "background": {
     "scripts": [
       "background.js"
+      "js/jquery.js"
     ]
   },
 
