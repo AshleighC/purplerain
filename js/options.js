@@ -1,11 +1,9 @@
 $(document).ready(function() {
-  chrome.storage.local.get("cityName", function(result) {
-    $('#cityName').val(result.cityName ? result.cityName : "Berkeley");
+  chrome.storage.local.get("city", function(result) {
+    $('#cityName').val(result.city);
   });
 });
 
 $('#startButton').click(function() {
-  var cityNameObj = {"cityName": $('#cityName').val()}
-  chrome.storage.local.set(cityNameObj);
-  chrome.runtime.sendMessage(cityNameObj);
+  chrome.runtime.sendMessage({"city": $('#cityName').val()});
 });
