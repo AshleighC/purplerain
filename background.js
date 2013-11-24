@@ -1,12 +1,14 @@
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  // TODO: Do stuff with the city name.
-  alert(message.cityName);
-});
+    // TODO: Do stuff with the city name.
+    alert(message.cityName);
+    });
 
 function sendMessage(message) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, message);
-  });
+      chrome.tabs.sendMessage(tabs[0].id, message, function(response) {
+        console.log(response.farewell);
+        });
+      });
 }
 
 var current_weather;
@@ -24,12 +26,13 @@ function getWeather(lat, lon) {
       console.log("Weather is:" + data["weather"][0]["main"]);
       },
       "json");
-  });
+  sendMessage(data["weather"][0]["main"]);
 }
+
 
 function getLocation() {
   navigator.geolocation.getCurrentPosition(function(position) {
-    getWeather(position.coords.latitude, position.coords.longitude);
-  });
+      getWeather(position.coords.latitude, position.coords.longitude);
+      });
 }
 getLocation();
