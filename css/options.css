@@ -1,3 +1,69 @@
+.logo {
+  margin: 0 auto;
+  width: 128px;
+  height: 128px;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/img/icon128.png');
+}
+
+.wrapper {
+  padding: 20px;
+  width: 200px;
+  overflow: hidden;
+}
 label {
   white-space: nowrap;
+}
+
+h1,
+label,
+input {
+  font-family: "Open Sans", "Helvetica", sans-serif;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+input[type='text'] {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  width: 190px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+
+input[type='text']:focus {
+  box-shadow: 0 0 0 1px rgba(0, 179, 227, 0.25);
+}
+
+input[type='button'] {
+  display: block;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  float: right;
+  margin-top: 5px;
+  padding: 5px 10px;
+  /*font-weight: bold;*/
+  font-size: 13px;
+  background: #7b65ac;
+  color: white;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+input[type='button']:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
