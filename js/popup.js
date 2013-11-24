@@ -6,12 +6,14 @@ $(document).ready(function() {
 });
 
 $('#startButton').click(function() {
+  $('#errorText').hide();
   $('#loadingImage').show(function() {
     chrome.runtime.sendMessage({"city": $('#cityName').val()});
   });
 });
 
 $('#userLocation').click(function() {
+  $('#errorText').hide();
   $('#loadingImage').show(function() {
     chrome.runtime.sendMessage({"userLocation": true});
     $('#loadingImage').hide();
