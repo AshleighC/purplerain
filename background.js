@@ -1,18 +1,3 @@
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  //Listener for new message on "options" box
-  if (message.city === "tornado") {
-    //special behavior for tornado
-    current_weather["weather"] = ["tornado"];
-    sendMessage(current_weather);
-  } else if (message.city !== "") {
-    //weather based off city
-    setCity(message.city, getWeather);
-  } else {
-    //weather based off saved city
-    getWeather();
-  }
-});
-
 /**
  * Sends the given message to the content script running in the current tab.
  */
@@ -39,7 +24,7 @@ function setCityToUserLocation() {
         + position.coords.latitude + "," + position.coords.longitude
         + "&sensor=false";
     $.get(url, function(data) {
-      setCity(getLocality(data["results"][0]["address_components"]));
+      getLocality(data["results"][0]["address_components"], setCity);
     });
   });
 }
@@ -47,26 +32,11 @@ function setCityToUserLocation() {
 /**
  * Helper function used when finding the user's location.
  */
-function getLocality(components) {
-  for (i in components) {
-    if (components[i]["types"].indexOf("locality") !== -1
-        || components[i]["types"].indexOf("sublocality") !== -1) {
-      return components[i]["long_name"];
-    }
-  }
-}
-
-/**
- * Sets the current city to the user's preferred city if it has been
- * specified, or to the user's location if they have not specified a
- * preferred city.
- */
-function initializeCity() {
-  chrome.storage.local.get("city", function(result) {
-    if (result.city) {
-      setCity(result.city);
-    } else {
-      setCityToUserLocation();
+function getLocality(components, callback) {
+  $.each(components, function(i, component) {
+    if (component["types"].indexOf("sublocality") !== -1
+        || component["types"].indexOf("locality") !== -1) {
+      callback(component["long_name"]);
     }
   });
 }
@@ -86,3 +56,40 @@ function getWeather() {
     }, "json");
   });
 }
+
+/**
+ * Helper function for converting strings to title case.
+ */
+function titleCase(string) {
+  return string.replace(/\w\S*/g, function(text) {
+    return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+  });
+}
+
+/**
+ * Sets the current city to the user's preferred city if it has been
+ * specified, or to the user's location if they have not specified a
+ * preferred city.
+ */
+chrome.storage.local.get("city", function(result) {
+  if (result.city) {
+    setCity(result.city);
+  } else {
+    setCityToUserLocation();
+  }
+});
+
+/**
+ * Adds a listener for messages coming from the options page.
+ */
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  $.getJSON("special.json", function(special) {
+    if (special.indexOf(message.city.toLowerCase()) != -1) {
+      sendMessage({"weather": [message.city.toLowerCase()]});
+    } else if (message.city !== "") {
+      setCity(titleCase(message.city), getWeather);
+    } else {
+      getWeather();
+    }
+  });
+});
