@@ -19,6 +19,11 @@ handler["clouds"] = function() {
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  for (weather in handler) {
+    $.each($('.' + weather), function(i, div) {
+      div.remove();
+    });
+  }
   $.each(message.weather, function(i, weather) {
     handler[weather]();
   });
