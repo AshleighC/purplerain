@@ -9,6 +9,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       $('body').append('<div class="rain"></div>');
     } else if (weather === "clouds") {
       $('body').append('<div class="clouds"></div>');
+    } else if (weather === "tornado") {
+      $('body').append('<div class="tornado"></div>');
     }
   }
 });
