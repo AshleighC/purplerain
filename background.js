@@ -92,13 +92,17 @@ chrome.storage.local.get("city", function(result) {
  * Adds a listener for messages coming from the popup.
  */
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  $.getJSON("special.json", function(special) {
-    if (special.indexOf(message.city.toLowerCase()) != -1) {
-      sendMessage({"weather": [message.city.toLowerCase()]});
-    } else if (message.city !== "") {
-      setCity(titleCase(message.city), getWeather);
-    } else {
-      getWeather();
-    }
-  });
+  if (message.city) {
+    $.getJSON("special.json", function(special) {
+      if (special.indexOf(message.city.toLowerCase()) != -1) {
+        sendMessage({"weather": [message.city.toLowerCase()]});
+      } else if (message.city !== "") {
+        setCity(titleCase(message.city), getWeather);
+      } else {
+        getWeather();
+      }
+    });
+  } else if (message.userLocation) {
+    setCityToUserLocation();
+  }
 });
