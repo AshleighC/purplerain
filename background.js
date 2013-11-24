@@ -16,7 +16,7 @@ var geo_location = new Object();
 
 function getWeather(lat, lon) {
   console.log("hello");
-  var url = "api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
+  var url = "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + lat +"&lon=" + lon + "&APPID=640c99dd9bbca6a64ecfc02325b17fad";
   console.log(url);
   $.get(url, function(data) {
       console.log("success");

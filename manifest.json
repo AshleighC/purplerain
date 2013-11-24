@@ -7,7 +7,9 @@
 
   "permissions": [
     "tabs",
-    "geolocation"
+    "geolocation",
+    "http://api.openweathermap.org/data/2.5/*",
+    "https://api.openweathermap.org/data/2.5/*"
   ],
 
   "content_scripts": [
