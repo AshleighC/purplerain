@@ -47,7 +47,8 @@
   "web_accessible_resources": [
     "img/sun.png",
     "img/clouds.png",
-    "img/snow.png"
+    "img/snow.png",
+    "img/icon128.png"
   ],
 
   "browser_action": {
