@@ -51,17 +51,22 @@ function getWeather() {
     var popup = chrome.extension.getViews({"type": "popup"})[0];
     var request = $.get("http://api.openweathermap.org/data/2.5/weather?"
         + "q=" + result.city + "&APPID=640c99dd9bbca6a64ecfc02325b17fad");
-
-    request.success(function(data) {
-      popup.close();
-      $.getJSON("weather.json", function(weatherTypes) {
-        sendMessage({"weather": weatherTypes[data.weather[0].id]});
-      });
-    });
-
-    request.error(function(jqXHR, textStatus, errorThrown) {
+    var fail = function() {
+      sendMessage({"weather": []});
       popup.$('#loadingImage').hide();
       popup.$('#errorText').show();
+    };
+
+    request.error(fail);
+    request.success(function(data) {
+      $.getJSON("weather.json", function(weatherTypes) {
+        if (typeof data.weather === "undefined") {
+          fail();
+        } else {
+          popup.close();
+          sendMessage({"weather": weatherTypes[data.weather[0].id]});
+        }
+      });
     });
   });
 }
